@@ -1,44 +1,31 @@
--- Tabela autor
-CREATE TABLE autor (
-  id_autor INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(255) NOT NULL,
-  nacionalidade VARCHAR(100)
-);
+create table clientes (
+	CPF varchar(20) not null primary key,
+	nome varchar (255) not null,
+	telefone varchar(15),
+	idade date,
+	sexo char(1) check (sexo in ('M', 'F'))
 
--- Tabela editora
-CREATE TABLE editora (
-  id_editora INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(255) NOT NULL,
-  cidade VARCHAR(100)
-);
-
--- Tabela livros (depois)
-CREATE TABLE livros (
-  isbn CHAR(13) NOT NULL PRIMARY KEY,
-  titulo VARCHAR(255) NOT NULL,
-  ano_publicacao INT,
-  id_autor INT NOT NULL,
-  id_editora INT NOT NULL,
-  FOREIGN KEY (id_autor) REFERENCES autor(id_autor),
-  FOREIGN KEY (id_editora) REFERENCES editora(id_editora)
 );
 
 
-INSERT INTO autor (nome, nacionalidade) VALUES
-('Machado de Assis', 'Brasileira'),
-('George Orwell', 'Britânica'),
-('Clarice Lispector', 'Brasileira'),
-('J.K. Rowling', 'Britânica');
+create table cidades (
+	id int primary key auto_increment,
+	nome varchar(255) not null
 
-INSERT INTO editora (nome, cidade) VALUES
-('Companhia das Letras', 'São Paulo'),
-('HarperCollins', 'Londres'),
-('Rocco', 'Rio de Janeiro'),
-('Penguin Books', 'Londres');
+);
 
 
-INSERT INTO livros (isbn, titulo, ano_publicacao, id_autor, id_editora) VALUES
-('9788535902774', 'Memórias Póstumas de Brás Cubas', 1881, 1, 1),
-('9780451524935', '1984', 1949, 2, 2),
-('9788535925186', 'A Hora da Estrela', 1977, 3, 1),
-('9788532530789', 'Harry Potter e a Pedra Filosofal', 1997, 4, 3);
+
+create table endereço (
+	id_endereco int primary key auto_increment,
+	cpf_cliente varchar (20) not null,
+	id_cidade int not null,
+	rua varchar(255),
+	numero varchar (255),
+	bairro varchar (255),
+	cep varchar (10),
+
+	foreign key (cpf_cliente) reference clientes(CPF),
+	foreign key (id_cidade) reference cidades (id)
+
+);
